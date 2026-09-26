@@ -13,8 +13,6 @@ import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
 
-#from train_model import main as train_and_save_model
-
 # ------------------------------------------------------------------
 # Page configuration
 # ------------------------------------------------------------------
@@ -52,8 +50,8 @@ def kpi_card(icon: str, label: str, value: str) -> str:
             </div>
         </div>
     """
+
 def inject_ltr_fix():
-    # تمت إزالة تعديل اتجاه dir لمنع التعارض مع sliders
     pass
 
 
@@ -250,19 +248,27 @@ def inject_css():
 
 
 # ------------------------------------------------------------------
-# Model loading (trains automatically on first run)
+# Model loading
 # ------------------------------------------------------------------
 @st.cache_resource(show_spinner=False)
 def load_model_and_metadata():
-    if not (os.path.exists(MODEL_FILENAME) and os.path.exists(META_FILENAME)):
-        train_and_save_model()
-    model = joblib.load(MODEL_FILENAME)
-    metadata = joblib.load(META_FILENAME)
+    # البحث عن المسار سواء كان في نفس الفولدر أو المسار الأساسي
+    base_dir = os.path.dirname(__file__)
+    model_path = os.path.join(base_dir, MODEL_FILENAME)
+    meta_path = os.path.join(base_dir, META_FILENAME)
+
+    if not os.path.exists(model_path):
+        model_path = MODEL_FILENAME
+    if not os.path.exists(meta_path):
+        meta_path = META_FILENAME
+
+    model = joblib.load(model_path)
+    metadata = joblib.load(meta_path)
     return model, metadata
 
 
 # ------------------------------------------------------------------
-# Feature engineering for a single new order (mirrors the notebook)
+# Feature engineering for a single new order
 # ------------------------------------------------------------------
 def build_features(raw: dict, metadata: dict) -> pd.DataFrame:
     input_df = pd.DataFrame([raw])
