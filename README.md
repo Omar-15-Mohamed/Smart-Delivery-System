@@ -1,3 +1,5 @@
+## 🌐 Live Demo
+You can test the live Streamlit application here: [Smart Delivery System App](https://smart-delivery-system-ixuc9re67t5wwsf4p3dynt.streamlit.app)
 <div align="center">
 
 # 📊 NTI Advanced Data Analysis — Graduation Project
