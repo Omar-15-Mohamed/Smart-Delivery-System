@@ -13,7 +13,7 @@ import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
 
-from train_model import main as train_and_save_model
+#from train_model import main as train_and_save_model
 
 # ------------------------------------------------------------------
 # Page configuration
